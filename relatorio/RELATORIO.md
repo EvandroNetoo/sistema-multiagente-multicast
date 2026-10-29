@@ -1,6 +1,6 @@
 # Sistema distribuído de avaliação didática de risco cardiológico com LPA2v
 
-**Integrantes:** Evandro, Joel, Lucas, Arhur Alves, Iago e João Gama  
+**Integrantes:** Evandro, Joel, Lucas, Arhur Alves e Iago  
 **Grupo:** 4  
 **Tecnologia:** Java 17, UDP multicast e Lógica Paraconsistente Anotada de 2 Valores
 
@@ -298,6 +298,6 @@ central.
 ## 7. Organização do grupo
 
 O trabalho foi desenvolvido e revisado coletivamente por Evandro, Joel, Lucas,
-Arhur Alves, Iago e João Gama. Todos devem conhecer a arquitetura, executar
+Arhur Alves e Iago. Todos devem conhecer a arquitetura, executar
 qualquer processo e explicar protocolo, escalas, concorrência, rede e LPA2v na
 demonstração.

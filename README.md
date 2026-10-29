@@ -9,7 +9,7 @@ uma rede de três Nós de Análise Paraconsistente (LPA2v).
 
 ## Integrantes
 
-Evandro, Joel, Lucas, Arhur Alves, Iago e João Gama.
+Evandro, Joel, Lucas, Arhur Alves e Iago.
 
 ## Pré-requisitos e compilação
 

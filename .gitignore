@@ -1,0 +1,29 @@
+# Artefatos de compilação Java/NetBeans
+/build/
+/build-verify/
+/dist/
+*.class
+*.jar
+
+# Configurações locais do NetBeans e de outros editores
+/nbproject/private/
+/.idea/
+/.vscode/
+*.iml
+
+# Logs gerados durante a execução
+/logs/
+*.log
+
+# Arquivos temporários e do sistema operacional
+*.tmp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Artefatos auxiliares da geração do relatório
+/relatorio/RELATORIO.html
+__pycache__/
+*.pyc

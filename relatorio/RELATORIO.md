@@ -14,17 +14,9 @@ questionários e medidas, cria um UUID e envia quatro requisições. Cada agente
 escuta o mesmo grupo multicast, descarta mensagens alheias, calcula somente seu
 fator e publica uma resposta no próprio grupo. Não há TCP, RMI nem UDP unicast.
 
-```text
- Máquina A                    grupo 239.0.0.G : 5000+G
-+----------------+       +--------------------------------+
-| COORDENADOR    |<----->|       UDP MULTICAST TTL=1      |
-+----------------+       +---+-----------+------------+---+
-                            ^           ^            ^
- Máquina B                  |           |            |       Máquina C
-+------------------+  +-------------------+   +----------------+ +-------------+
-| TABAGISMO       |  | SEDENTARISMO      |   | PRESSÃO        | | IMC         |
-+------------------+  +-------------------+   +----------------+ +-------------+
-```
+![Arquitetura distribuída com coordenador, grupo multicast e quatro agentes em três máquinas](diagramas/arquitetura.svg)
+
+*Figura 1 — Processos distribuídos e único canal de comunicação multicast.*
 
 Todos ingressam com `joinGroup(SocketAddress, NetworkInterface)`. A interface é
 obrigatoriamente indicada por nome ou IPv4. O socket usa `setTimeToLive(1)`, de
@@ -36,18 +28,9 @@ Cada datagrama UTF-8 possui cinco campos separados por ponto e vírgula:
 `TIPO;ID;ORIGEM;DESTINO;DADOS`. Os tipos são `REQ`, `RESP` e `ERRO`. O UUID
 correlaciona respostas mesmo com dois coordenadores simultâneos.
 
-```text
-Coordenador       Grupo         Tabagismo  Sedentarismo  Pressão  IMC
-    |--REQ T-------->|-------------->|          |          |      |
-    |--REQ S-------->|------------------------->|          |      |
-    |--REQ PA------->|------------------------------------>|      |
-    |--REQ IMC------>|------------------------------------------->|
-    |<---------------|<--RESP T------|          |          |      |
-    |<---------------|<--------------RESP S-----|          |      |
-    |<---------------|<-------------------------RESP PA----|      |
-    |<---------------|<------------------------------------RESP---|
-    |  correlaciona UUID, executa NAP1, NAP2 e NAP3, classifica   |
-```
+![Diagrama de sequência de uma avaliação completa pelo grupo multicast](diagramas/sequencia.svg)
+
+*Figura 2 — Sequência completa, da difusão das requisições à consolidação pela LPA2v.*
 
 Exemplos: `REQ;a3f9c2;COORD;PRESSAO;150,95`,
 `RESP;a3f9c2;PRESSAO;COORD;0.500` e
@@ -166,6 +149,10 @@ Para cada nó, `Gc=μ-λ`, `Gct=μ+λ-1` e `μE=(Gc+1)/2`. O NAP1 recebe `μT` e
 `1-μS`; o NAP2 recebe `μPA` e `1-μIMC`; o NAP3 recebe `μE1` e `1-μE2`.
 A classificação testa, nesta ordem, `Gc>=0,5`, `Gc<=-0,5`, `Gct>=0,5` e
 `Gct<=-0,5`; caso contrário, o estado é não extremo.
+
+![Rede LPA2v com NAP1, NAP2 e NAP3](diagramas/rede-lpa2v.svg)
+
+*Figura 3 — Encadeamento dos três Nós de Análise Paraconsistente.*
 
 ```java
 NoLpa2v nap1 = calcular("NAP1", tabagismo, 1 - sedentarismo);

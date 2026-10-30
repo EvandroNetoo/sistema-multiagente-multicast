@@ -1,0 +1,37 @@
+sequenceDiagram
+    autonumber
+    participant C as Coordenador
+    participant G as Grupo multicast<br/>239.0.0.4:5004
+    participant T as Tabagismo
+    participant S as Sedentarismo
+    participant P as Pressão
+    participant I as IMC
+
+    Note over C,I: Todos recebem os datagramas. ORIGEM / DESTINO / UUID determinam processamento ou descarte
+    C->>G: REQ — UUID — destino TABAGISMO — respostas T1 a T5
+    G-->>T: entrega da requisição
+    C->>G: REQ — UUID — destino SEDENTARISMO — respostas S1 a S5
+    G-->>S: entrega da requisição
+    C->>G: REQ — UUID — destino PRESSAO — PAS / PAD
+    G-->>P: entrega da requisição
+    C->>G: REQ — UUID — destino IMC — peso / altura
+    G-->>I: entrega da requisição
+
+    par Processamento concorrente
+        T->>T: validar e calcular μT
+    and
+        S->>S: validar e calcular μS
+    and
+        P->>P: validar e calcular μPA
+    and
+        I->>I: validar e calcular μIMC
+    end
+
+    T->>G: RESP ou ERRO — UUID — origem TABAGISMO — dados
+    S->>G: RESP ou ERRO — UUID — origem SEDENTARISMO — dados
+    P->>G: RESP ou ERRO — UUID — origem PRESSAO — dados
+    I->>G: RESP ou ERRO — UUID — origem IMC — dados
+    G-->>C: entrega das respostas identificadas
+    Note over C: aguarda quatro respostas ou timeout de 3 s<br/>ignora duplicidade e não inventa evidências
+    C->>C: executar NAP1, NAP2 e NAP3
+    C->>C: apresentar graus, estado lógico e classificação

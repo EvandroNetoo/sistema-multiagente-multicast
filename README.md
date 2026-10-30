@@ -123,3 +123,5 @@ apresentação ao usuário.
 
 O relatório-base está em `relatorio/RELATORIO.md`. Adicione
 instituição/disciplina/professor e insira as capturas reais antes da entrega.
+Os diagramas editáveis estão em `relatorio/diagramas/*.mmd` e são renderizados
+como SVG pelo Mermaid CLI; o PDF incorpora esses vetores sem perda de qualidade.

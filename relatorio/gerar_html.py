@@ -23,6 +23,8 @@ pre { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc;
 code { font-family: Consolas, monospace }
 blockquote { border-left: 4px solid #888; padding-left: 10px; color: #555 }
 table, pre { break-inside: avoid }
+img { display: block; width: 100%; max-width: 100%; height: auto;
+      margin: 14px auto 22px; break-inside: avoid }
 </style>
 """
 pagina = (

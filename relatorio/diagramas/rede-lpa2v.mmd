@@ -1,0 +1,27 @@
+flowchart LR
+    T["<b>Tabagismo</b><br/>μT"]
+    S["<b>Sedentarismo</b><br/>μS"]
+    P["<b>Pressão arterial</b><br/>μPA"]
+    I["<b>IMC</b><br/>μIMC"]
+
+    N1["<b>NAP1</b><br/>Fatores comportamentais<br/>μ = μT<br/>λ = 1 − μS<br/><i>saída μE1</i>"]
+    N2["<b>NAP2</b><br/>Fatores clínicos<br/>μ = μPA<br/>λ = 1 − μIMC<br/><i>saída μE2</i>"]
+    N3["<b>NAP3</b><br/>Decisão final<br/>μ = μE1<br/>λ = 1 − μE2<br/><i>Gc • Gct • μE</i>"]
+    R["<b>RESULTADO</b><br/>Estado lógico<br/>Classificação"]
+
+    T -->|"μT"| N1
+    S -->|"1 − μS"| N1
+    P -->|"μPA"| N2
+    I -->|"1 − μIMC"| N2
+    N1 -->|"μE1"| N3
+    N2 -->|"1 − μE2"| N3
+    N3 --> R
+
+    classDef behavioral fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#0f172a;
+    classDef clinical fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#0f172a;
+    classDef nap fill:#f5f3ff,stroke:#7c3aed,stroke-width:3px,color:#0f172a;
+    classDef result fill:#fff7ed,stroke:#ea580c,stroke-width:2px,color:#0f172a;
+    class T,S behavioral;
+    class P,I clinical;
+    class N1,N2,N3 nap;
+    class R result;

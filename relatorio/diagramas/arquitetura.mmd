@@ -1,0 +1,40 @@
+flowchart LR
+    subgraph MA["Máquina A"]
+        C["<b>COORDENADOR</b><br/>Entrada do paciente<br/>Timeout e UUID<br/>Rede LPA2v"]
+    end
+
+    G(["<b>GRUPO UDP MULTICAST</b><br/>239.0.0.4 : 5004<br/>TTL = 1 • rede local"])
+
+    subgraph MB["Máquina B"]
+        direction TB
+        T["<b>TABAGISMO</b><br/>μT = pontos / 13"]
+        S["<b>SEDENTARISMO</b><br/>μS = pontos / 9"]
+    end
+
+    subgraph MC["Máquina C"]
+        direction TB
+        P["<b>PRESSÃO</b><br/>μPA por interpolação"]
+        I["<b>IMC</b><br/>μIMC por interpolação"]
+    end
+
+    C -->|"REQ com UUID"| G
+    G -->|"entrega REQ"| T
+    G -->|"entrega REQ"| S
+    G -->|"entrega REQ"| P
+    G -->|"entrega REQ"| I
+    T -->|"RESP ou ERRO"| G
+    S -->|"RESP ou ERRO"| G
+    P -->|"RESP ou ERRO"| G
+    I -->|"RESP ou ERRO"| G
+    G -->|"entrega respostas"| C
+
+    classDef coordinator fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#0f172a;
+    classDef agent fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#0f172a;
+    classDef multicast fill:#1d4ed8,stroke:#1e3a8a,stroke-width:3px,color:#ffffff;
+    class C coordinator;
+    class T,S,P,I agent;
+    class G multicast;
+
+    style MA fill:#f8fafc,stroke:#94a3b8,stroke-width:2px
+    style MB fill:#f8fafc,stroke:#94a3b8,stroke-width:2px
+    style MC fill:#f8fafc,stroke:#94a3b8,stroke-width:2px
